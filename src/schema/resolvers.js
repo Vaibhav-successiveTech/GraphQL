@@ -31,13 +31,10 @@ export const resolvers = {
     Comment: {
         post: (parent) => {
             return Post.find(post => post.id === parent.postId)
-        }
-    },
-
-    Comment: {
+        },
         author: (parent) => {
             const ans = User.find(user => user.id === parent.authorId)
             return ans;
         }
-    }
+    },
 };

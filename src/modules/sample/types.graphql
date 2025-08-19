@@ -1,0 +1,22 @@
+type user{
+    id: ID!,
+    name: String!,
+    username: String!,
+    email: String!,
+    address: Address!
+}
+
+type Address {
+    street: String!,
+    suite: String!,
+    city: String!,
+    zipcode: String!,
+}
+
+type Posts {
+    userId: String!,
+    id: String!,
+    title: String!,
+    body: String!,
+    userInfo: user!
+}

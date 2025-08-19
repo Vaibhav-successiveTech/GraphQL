@@ -1,16 +1,22 @@
 type Query{
     messages: [Message!]!
-    user:[User!]
-    getUser(id:ID!):User
-    getPost(id:ID!):Post!
+    user:[User!]!
+    getUserBlog(id:ID!):UserResult
+    getPostBlog(id:ID!):Post!
     posts:[Post!]!
     comments:[Comment!]!
-    getComment(id:ID):Comment!
+    getCommentBlog(id:ID):Comment!
     Users:[user]
     getUserID(id:ID):user
     Post:[Posts!]!
+    getUser(id:ID!):User
+    getTodo(page:Int!,limit:Int!):[Todo!]!
 }
 
 type Mutation{
     postMessage(content:String!,author:String!):Message!
+    updateUser(id:ID!,name:String!,email:String!):[User!]!
+    deleteComments(id:ID!):[Comment!]!
+    addPost(id:ID!,title:String!,content:String!,authorId:ID!):[Post!]!
+    addComment(id:ID!,content:String!,authorId:ID!,postId:ID!):[Comment!]!
 }

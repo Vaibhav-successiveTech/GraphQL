@@ -1,0 +1,22 @@
+type Participant{
+    id: ID!,
+    name: String!,
+    token: String!
+}
+
+type Chat{
+    message: String!,
+}
+
+type senderError {
+    code: Int!,
+    message: String!
+}
+type history{
+    list: [Chat!]!
+}
+union RegisterResult = Participant | senderError
+
+union ChatResult = Chat | senderError
+
+union historyResult = history | senderError

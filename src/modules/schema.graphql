@@ -11,12 +11,21 @@ type Query{
     Post:[Posts!]!
     getUser(id:ID!):User
     getTodo(page:Int!,limit:Int!):[Todo!]!
+    fetchHistory(name:String!):historyResult!
 }
 
 type Mutation{
-    postMessage(content:String!,author:String!):Message!
+    postMessage(content:String!,author:String!,title:String!):Message!
     updateUser(id:ID!,name:String!,email:String!):[User!]!
     deleteComments(id:ID!):[Comment!]!
     addPost(id:ID!,title:String!,content:String!,authorId:ID!):[Post!]!
     addComment(id:ID!,content:String!,authorId:ID!,postId:ID!):[Comment!]!
+    postChat(message:String!):ChatResult!
+    register(id:ID!,name:String!,email:String!):RegisterResult!
+    login(name:String!):RegisterResult!
+}
+
+type Subscription{
+    MessageAdded: Message
+    PostChat: ChatResult
 }

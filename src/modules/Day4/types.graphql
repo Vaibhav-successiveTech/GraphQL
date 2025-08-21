@@ -1,0 +1,20 @@
+type Product{
+    id:ID!,
+    name:String!,
+    price:Int!,
+    description:String!
+}
+
+type UserDay4{
+    id:ID!,
+    name:String!,
+    role:String,
+    token:String!
+}
+
+type error {
+    code: Int!
+    message:String!
+}
+
+union ProductResult = Product | error

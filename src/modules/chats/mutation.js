@@ -41,6 +41,20 @@ const ChatMutation = {
             return {code : 400, message : 'Unauthorized'}
         }
         return {id : '1',name : name, token,token}
+    },
+    setUserOnline: (_,{name},{pubsub})=>{
+        if(!UserData[name]){
+            return 'User Not found'
+        }
+        pubsub.publish('POST_CHAT',{PostChat : {message : `${name} entered the chat`}})
+        return name
+    },
+    setUserOffline : (_,{name},{pubsub})=>{
+        if(!UserData[name]){
+            return 'User Not found'
+        }
+        pubsub.publish('POST_CHAT',{PostChat : {message : `${name} left the chat`}})
+        return name
     }
 }
 

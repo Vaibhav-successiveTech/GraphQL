@@ -23,6 +23,8 @@ type Mutation{
     postChat(message:String!):ChatResult!
     register(id:ID!,name:String!,email:String!):RegisterResult!
     login(name:String!):RegisterResult!
+    setUserOnline(name:String!):String!
+    setUserOffline(name:String!):String!
 }
 
 type Subscription{

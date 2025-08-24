@@ -11,6 +11,7 @@ export const resolvers = {
     },
     Mutation: {
         ...messageModule.Mutation,
+        ...blogModule.Mutation
     },
     Posts: {
         userInfo: async (parent) => {
@@ -22,18 +23,28 @@ export const resolvers = {
             }
         }
     },
-    Post: {
-        author: (parent) => {
-            return User.find(user => user.id === parent.authorId)
+    UserResult: {
+        __resolveType(obj) {
+            if (obj.id) {
+                return 'User'; 
+            }
+            if (obj.message) {
+                return 'Error';
+            }
+            return null;
         }
     },
-
+    Post: {
+        author: (parent) => {
+            return User.find(user => user.id == parent.authorId)
+        },
+    },
     Comment: {
         post: (parent) => {
-            return Post.find(post => post.id === parent.postId)
+            return Post.find(post => post.id == parent.postId)
         },
         author: (parent) => {
-            const ans = User.find(user => user.id === parent.authorId)
+            const ans = User.find(user => user.id == parent.authorId)
             return ans;
         }
     },

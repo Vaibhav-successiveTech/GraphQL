@@ -3,15 +3,30 @@ import { blogModule } from "../modules/blog/index.js";
 import { Post, User } from "../modules/blog/dataSource.js";
 import { sampleResolver } from "../modules/sample/query.js";
 import axios from 'axios';
+import pubsub from '../server/pubsub.js'
+import ChatModule from '../modules/chats/index.js'
 export const resolvers = {
     Query: {
         ...messageModule.Query,
         ...blogModule.Query,
-        ...sampleResolver.Query
+        ...sampleResolver.Query,
+        ...ChatModule.Query
     },
     Mutation: {
         ...messageModule.Mutation,
-        ...blogModule.Mutation
+        ...blogModule.Mutation,
+        ...ChatModule.Mutation
+    },
+    Subscription : {
+        MessageAdded : {
+            subscribe : ()=>pubsub.asyncIterableIterator(['MESSAGE_ADDED'])
+        },
+        PostChat : {
+            subscribe : ()=>{
+                const res = pubsub.asyncIterableIterator(['POST_CHAT'])
+                return res;
+            }
+        }
     },
     Posts: {
         userInfo: async (parent) => {
@@ -20,6 +35,16 @@ export const resolvers = {
                 return res.data;
             } catch (err) {
                 console.error("Error fetching userInfo:", err.message);
+            }
+        }
+    },
+    historyResult : {
+        __resolveType(obj){
+            if(obj.list){
+                return 'history'
+            }
+            if(obj.code){
+                return 'senderError'
             }
         }
     },
@@ -32,6 +57,26 @@ export const resolvers = {
                 return 'Error';
             }
             return null;
+        }
+    },
+    ChatResult: {
+        __resolveType(obj){
+            if(obj.message){
+                return 'Chat'
+            }
+            if(obj.code){
+                return 'senderError'
+            }
+        }
+    },
+    RegisterResult : {
+        __resolveType(obj){
+            if(obj.id){
+                return 'Participant'
+            }
+            if(obj.code){
+                return 'senderError'
+            }
         }
     },
     Post: {

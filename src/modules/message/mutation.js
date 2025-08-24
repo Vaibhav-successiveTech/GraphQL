@@ -1,7 +1,7 @@
 import { messages } from "./dataSource.js";
 
 export const messageMutationResolvers = {
-  postMessage: (_, { content, author,title }) => {
+  postMessage: (_, { content, author,title }, {pubsub}) => {
     const newMessage = {
       id: String(messages.length + 1),
       content,
@@ -10,6 +10,7 @@ export const messageMutationResolvers = {
       title
     };
     messages.push(newMessage);
+    pubsub.publish('MESSAGE_ADDED', { MessageAdded : newMessage });
     return newMessage;
-  },
+  }, 
 };

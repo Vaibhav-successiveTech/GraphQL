@@ -28,6 +28,8 @@ type Mutation{
     addProduct(id:ID!,name:String!,price:Int!,description:String!):ProductResult
     RegisterUser(id:ID!,name:String!,role:String!):UserDay4
     loginUser(id:ID!,name:String!):String
+    setUserOnline(name:String!):String!
+    setUserOffline(name:String!):String!
 }
 
 type Subscription{

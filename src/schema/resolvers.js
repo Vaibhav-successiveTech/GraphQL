@@ -5,17 +5,21 @@ import { sampleResolver } from "../modules/sample/query.js";
 import axios from 'axios';
 import pubsub from '../server/pubsub.js'
 import ChatModule from '../modules/chats/index.js'
+import { ProductModule,UserModule } from "../modules/Day4/index.js";
 export const resolvers = {
     Query: {
         ...messageModule.Query,
         ...blogModule.Query,
         ...sampleResolver.Query,
-        ...ChatModule.Query
+        ...ChatModule.Query,
+        ...ProductModule.Query
     },
     Mutation: {
         ...messageModule.Mutation,
         ...blogModule.Mutation,
-        ...ChatModule.Mutation
+        ...ChatModule.Mutation,
+        ...ProductModule.Mutation,
+        ...UserModule.Mutation
     },
     Subscription : {
         MessageAdded : {
@@ -76,6 +80,16 @@ export const resolvers = {
             }
             if(obj.code){
                 return 'senderError'
+            }
+        }
+    },
+    ProductResult : {
+        __resolveType(obj){
+            if(obj.code){
+                return 'error'
+            }
+            if(obj.id){
+                return 'Product'
             }
         }
     },

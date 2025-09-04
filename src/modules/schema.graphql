@@ -12,6 +12,8 @@ type Query{
     getUser(id:ID!):User
     getTodo(page:Int!,limit:Int!):[Todo!]!
     fetchHistory(name:String!):historyResult!
+    fetchProduct:[Product]
+    fetchProductId(id:ID!):Product
 }
 
 type Mutation{
@@ -23,6 +25,9 @@ type Mutation{
     postChat(message:String!):ChatResult!
     register(id:ID!,name:String!,email:String!):RegisterResult!
     login(name:String!):RegisterResult!
+    addProduct(id:ID!,name:String!,price:Int!,description:String!):ProductResult
+    RegisterUser(id:ID!,name:String!,role:String!):UserDay4
+    loginUser(id:ID!,name:String!):String
     setUserOnline(name:String!):String!
     setUserOffline(name:String!):String!
 }
